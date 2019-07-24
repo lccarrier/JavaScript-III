@@ -6,22 +6,84 @@
   At the bottom of this file are 3 objects that all end up inheriting from Humanoid.  Use the objects at the bottom of the page to test your constructor functions.
   
   Each constructor function has unique properties and methods that are defined in their block comments below:
-*/
-  
 /*
-  === GameObject ===
-  * createdAt
-  * name
-  * dimensions (These represent the character's size in the video game)
-  * destroy() // prototype method that returns: `${this.name} was removed from the game.`
+
+
+
+
+
+
+
+
+
+/*
+ === GameObject ===
 */
+function GameObject(attributes) {
+  this.createdAt = attributes.createdAt,
+  this.name = attributes.name,
+  this.dimensions = attributes.dimensions
+}
+
+GameObject.prototype.destroy =  function() {
+  return `${this.name} was removed from the game.`;
+}
+
+const halo = new GameObject({
+  createdAt: 34,
+  name: 'LC Carrier',
+  dimensions: '100 GB'
+});
+console.log(halo.destroy());
+
 
 /*
   === CharacterStats ===
-  * healthPoints
-  * takeDamage() // prototype method -> returns the string '<object name> took damage.'
-  * should inherit destroy() from GameObject's prototype
 */
+function CharacterStats(attributes) {
+  GameObject.call(this, attributes),
+  this.healthPoints = attributes.healthPoints
+}
+
+CharacterStats.prototype.takeDamage = function() {
+  return `${GameObject.name} took damage.`
+}
+
+const char = new CharacterStats({
+    createdAt: '19', 
+    name: 'lc',
+    dimensions: '39',
+    healthPoints: 34
+});
+console.log(char.takeDamage());
+
+
+
+
+
+function Humanoid(attributes) {
+  GameObject.call(this, attributes),
+  CharacterStats.call(this, attributes),
+
+  this.team = attributes.team,
+  this.weapons = attributes.weapons,
+  this.language = attributes.language
+}
+Humanoid.prototype.greet = function() {
+  return `${this.name} offers a greeting in ${this.language}`
+}
+
+const huma = new Humanoid({
+    createdAt: '12-10-1992',
+    name: 'Superman',
+    dimension: '12 * 12',
+    team: 'Good Guys', 
+    weapons: 'Snipper',
+    language: 'Chinese',
+})
+
+console.log(huma.takeDamage());
+
 
 /*
   === Humanoid (Having an appearance or character resembling that of a human.) ===
@@ -31,7 +93,7 @@
   * greet() // prototype method -> returns the string '<object name> offers a greeting in <object language>.'
   * should inherit destroy() from GameObject through CharacterStats
   * should inherit takeDamage() from CharacterStats
-*/
+
  
 /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
@@ -103,6 +165,15 @@
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
 */
+
+
+
+
+
+
+
+
+
 
   // Stretch task: 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
